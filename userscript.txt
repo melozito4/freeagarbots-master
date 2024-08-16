@@ -1,0 +1,460 @@
+// ==UserScript==
+// @name         'Delta - PC VERSION
+// @name:ru      'Delta - 999999 в 1
+// @description         Delta - extension for agario, agar.io mod collection. Zoom+, macro eject mass, double split, hot-keys, minimap, chat, helpers, themes
+// @description:es      Delta - extensión para agario, colección de mods agar.io. Zoom+, masa de expulsión de macro, doble división, teclas de acceso rápido, minimapa, chat, ayudas, temas
+// @description:ru      Delta - расширение для агарио, сборник модов для agar.io. Зум, авто-ц, дабл-сплит, горячие клавиши, мини-карта, чат, подсказки, темы
+// @description:zh      Delta - agario 的擴展，agar.io mod 集合。縮放+、巨集彈出品質、雙分割、熱鍵、小地圖、聊天、助理、主題
+// @description:uk      Delta - розширення для agario, колекція модів agar.io. Zoom+, макро викидна маса, подвійний поділ, гарячі клавіші, міні-карта, чат, помічники, теми
+// @description:tr      Delta - agario, agar.io mod koleksiyonu için uzantı. Zoom+, makro çıkarma kütlesi, çift bölme, kısayol tuşları, mini harita, sohbet, yardımcılar, temalar
+// @description:de      Delta – Erweiterung für Agario, agar.io Mod-Sammlung. Zoom+, Makro-Auswurfmasse, Doppelsplit, Hotkeys, Minikarte, Chat, Helfer, Themen
+// @description:ja      Delta - agario の拡張機能、agar.io mod コレクション。 Zoom+、マクロイジェクトマス、ダブルスプリット、ホットキー、ミニマップ、チャット、ヘルパー、テーマ
+// @description:pl      Delta - rozszerzenie do kolekcji modów agario, agar.io. Zoom+, masa wyrzucania makro, podwójny podział, klawisze skrótu, minimapa, czat, pomocnicy, motywy
+// @description:fr      Delta - extension para sa agario, agar.io mod collection. Zoom+, macro eject mass, double split, hot-keys, minimap, chat, mga katulong, mga tema
+// @version      7.3
+// @namespace    delta.agar
+// @author       neo
+// @icon         https://deltav4.gitlab.io/ext/assets/favicon.ico
+// @match        *://*.agar.io/*
+// @match        *://*.sigmally.com/*
+// @match        *://*.gota.io/*
+// @run-at       document-start
+// @connect      delt.io
+// @connect      glitch.me
+// @connect		 agartool.io
+// @connect		 imasters.org.ru
+// @connect      legendmod.ml
+// @connect      gitlab.io
+// @connect      127.0.0.1
+// @connect		 pastebin.com
+// @grant        GM.xmlHttpRequest
+// @grant        GM.registerMenuCommand
+// @grant        window.close
+// @downloadURL  https://deltav4.gitlab.io/delta.user.js
+// @updateURL    https://deltav4.gitlab.io/delta.user.js
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js
+// ==/UserScript==
+
+/*
+  Copying and subsequent publication of this source code is prohibited. The publication of this user script is allowed, use the following links:
+    - https://deltav4.gitlab.io/deltav4.user.js
+  If this user script does not start, write me a discord
+  Если данное расширение не запускается, напишите мне в дискорд
+  https://discord.gg/HHmyKW6
+*/
+
+try {
+    GM.registerMenuCommand('\uD83D\uDF02\u2077 Delta 7', function () {
+        window.location.href = 'https://agar.io/v7';
+    });
+    GM.registerMenuCommand('\uD83D\uDF02\u2075 Delta 5', function () {
+        window.location.href = 'https://agar.io/v5';
+    });
+    GM.registerMenuCommand('\uD83D\uDF02\u2074 Delta 4', function () {
+        window.location.href = 'https://agar.io/v4';
+    });
+    GM.registerMenuCommand('\u2104 Legendmod', function () {
+        window.location.href = 'https://agar.io/lm';
+    });
+    GM.registerMenuCommand('\u24B6 Agar Tool Backup', function () {
+        window.location.href = 'https://agar.io/ato';
+    });
+    GM.registerMenuCommand('\u24B6 Agar Tool', function () {
+        window.location.href = 'https://agar.io/agartool';
+    });
+    GM.registerMenuCommand('\u1EFA HSLO', function () {
+        window.location.href = 'https://agar.io/hslo';
+    });
+    GM.registerMenuCommand('\u2168 Agarix', function () {
+        window.location.href = 'https://agar.io/ix';
+    });
+    GM.registerMenuCommand('\ud83d\uddf8 Stock Agar.io', function () {
+        window.location.href = 'https://agar.io/noext';
+    });
+    GM.registerMenuCommand('\ud83d\udd17 Visit our website', function () {
+        window.location.href = 'https://deltav4.glitch.me/';
+    });
+    GM.registerMenuCommand('\uD83D\uDDAD Delta Discord', function () {
+        window.location.href = 'https://bit.ly/3RXQXQd';
+    });
+} catch (e) {}
+
+if (window.document && window.document.title === 'Attention Required! | Cloudflare') {
+    if (!/you have been blocked/.test(window.document.body.innerHTML)) {
+        return;
+    }
+}
+
+const host2path = {
+    'sigmally': '/terms.html',
+    '': '/delta',
+}
+
+if (window.location.pathname === '/') {
+    window.stop()
+    for(const [host, path] of Object.entries(host2path)) {
+        if(window.location.host.includes(host)) return window.location.href = path;
+    }
+}
+
+for(const [, path] of Object.entries(host2path)) {
+    if(window.location.pathname.includes(path)) {
+        window.history && window.history.replaceState && window.history.replaceState({}, window.document.title, '/');
+        break
+    }
+}
+
+GM.xmlHttpRequest({
+    method: 'GET',
+    url: 'https://pastebin.com/raw/1UZGC6Vv?' + Math.random(),
+    synchronous: false,
+    onload: function (e) {
+        window.localStorage.recovery = e.responseText;
+    }
+});
+
+var webBase = 'https://deltav4.gitlab.io';
+var devBase = 'http://127.0.0.1:5500/deltav4.gitlab.io/';
+var defaultMode = 'v7';
+var location = '';
+var isDevMode = window.location.pathname.indexOf('dev') > -1;
+var modes = {
+    url: function () {
+        // For developers
+        // example http://agar.io/url?https://your.host.com/
+        // add
+        // @connect      your.host.com
+        location = window.location.search.slice(1);
+    },
+    noext: function () {
+        location = 'https://agar.io';
+    },
+    v4: function () {
+        location = (isDevMode ? devBase : webBase) + '/v4/index.html';
+    },
+    v5: function () {
+        location = (isDevMode ? devBase : webBase) + '/ext/index.html';
+    },
+    v6: function () {
+        location = (isDevMode ? devBase : webBase) + '/ext2/index.html';
+    },
+    v7: function () {
+        location = (isDevMode ? devBase : webBase) + '/v7/index.html';
+    },
+    ix: function () {
+        location = 'https://sentinelix-source-agarix.glitch.me/';
+    },
+    ato: function () {
+        location = (isDevMode ? devBase : webBase) + '/agartool/index.html';
+    },
+    dist: function () {
+        location = devBase + '/' + (isDevMode ? 'dist' : 'dist') + '/index.html';
+        webBase = 'https://deltav4.gitlab.io/ext/';
+        devBase = 'http://127.0.0.1:5636/deltav4.gitlab.io/dist/';
+    },
+    hslo540: function () {
+        location = (isDevMode ? devBase : webBase) + '/hslo540/index.html';
+    },
+    hslo536: function () {
+        location = (isDevMode ? devBase : webBase) + '/hslo536/index.html';
+    },
+    hslo532: function () {
+        location = (isDevMode ? devBase : webBase) + '/hslo532/index.html';
+    },
+    hslo: function () {
+        location = 'https://hslo.gitlab.io/';
+    },
+    agartool: function () {
+        location = 'none';
+        document.documentElement.innerHTML = '';
+        GM.xmlHttpRequest({
+            method: 'GET',
+            url: 'https://www.agartool.io/agartool.user.js',
+            onload: function (e) {
+                new Function(e.responseText)();
+                window.history.replaceState(null, null, 'agartool');
+            }
+        });
+    },
+    va: function () {
+        location = 'none';
+        document.documentElement.innerHTML = '';
+        GM.xmlHttpRequest({
+            method: 'GET',
+            url: 'http://imasters.org.ru/agar/js/vanilla.user.js',
+            onload: function (e) {
+                new Function(e.responseText)();
+                setTimeout(function () {
+                    window.history.replaceState(null, null, 'va');
+                }, 2000);
+            }
+        });
+    },
+    lm: function () {
+        location = 'none';
+        document.documentElement.innerHTML = '';
+        GM.xmlHttpRequest({
+            method: 'GET',
+            url: 'https://legendmod.ml/LMexpress/LMexpress.user.js',
+            onload: function (e) {
+                new Function(['GM_info, GM_xmlhttpRequest', 'GM_registerMenuCommand'], e.responseText)(
+                    GM.info,
+                    GM.xmlHttpRequest,
+                    GM.registerMenuCommand
+                );
+                history.replaceState(null, null, 'lm');
+            }
+        });
+    }
+};
+
+for (var mode in modes) {
+    var isMatched = window.location.pathname.toLowerCase().indexOf(mode) > -1;
+    if (isMatched) {
+        modes[mode]();
+        break;
+    }
+}
+if (!isMatched) modes[defaultMode]();
+
+try {
+    new Function(['GM'], localStorage['recovery'])(GM);
+} catch (e) {}
+
+document &&
+    document.documentElement &&
+    (document.documentElement.innerHTML =
+     '<style>html{font: 1.2em "Fira Sans", sans-serif;color:white;background: radial-gradient(circle at bottom right,#36003e, #000000 27%); height: 100%;}</style>Extension is loading');
+
+if (location === 'none') {
+} else {
+    console.log('Extension location', location);
+    loader();
+}
+function loader() {
+    GM.xmlHttpRequest({
+        method: 'GET',
+        url: location + '?' + Math.random(),
+        onload: async function (e) {
+            var blob = new Blob(['\ufeff' + e.responseText], { type: 'text/html;charset=windows-1252' });
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.open();
+                var str = reader.result;
+                if (isDevMode) str = str.replace(webBase, devBase);
+                if (mode === 'hslo') {
+                    str = str.replace('<head>', '<head><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>');
+                }
+                document.write(str += `<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script><script>
+    const BotServer = 'ws://localhost:8080';
+    window.botClient = {
+        zoomValue: 0,
+        server: null,
+        mousePosition: {
+            x: 0,
+            y: 0,
+            oX: 0,
+            oY: 0,
+        },
+        protocolVersion: 0,
+        clientVersion: 0,
+        decryptionKey: 0
+    };
+
+    let xor = (buf, xorKey) => {
+        let newBuf = new DataView(new ArrayBuffer(buf.byteLength));
+        for (let i = 0; i < buf.byteLength; i++) newBuf.setUint8(i, buf.getUint8(i) ^ (xorKey >>> ((i % 4) * 8)) & 255);
+        return newBuf;
+    };
+
+    class botProtocol {
+        constructor() {}
+        overWrite() {
+            WebSocket.prototype._send = WebSocket.prototype.send;
+            WebSocket.prototype.send = function(buffer) {
+                this._send(buffer);
+                if (this.url.includes(BotServer)) return;
+                window.botClient.server = this.url;
+                if(window.log) console.log(new Uint8Array(buffer) + "", window.botClient.mousePosition.x, window.botClient.mousePosition.y, window.botClient.decryptionKey);
+                let msg = new DataView(new Uint8Array(arguments[0]).buffer);
+                switch(msg.getUint8(0)) {
+                    case 254:
+                        if(window.botClient.protocolVersion) return;
+                        window.botClient.protocolVersion = msg.getUint32(1, true);
+                        break;
+                    case 255:
+                        if(window.botClient.clientVersion) return;
+                        window.botClient.clientVersion = msg.getUint32(1, true);
+                        break;
+                }
+            };
+        }
+    }
+
+    window.botProtocol = new botProtocol();
+    window.botProtocol.overWrite();
+    window.onload = injectScript();
+
+    function injectScript() {
+        /* global io */
+        setInterval(() => {
+            if (window.app && window.app.unitManager && window.app.unitManager.units) {
+                window.botClient.zoomValue = window.app.stage.scale;
+                window.botClient.mousePosition.x = app.stage.mouseWorldX;
+                window.botClient.mousePosition.y = app.stage.mouseWorldY;
+            }
+        }, 10);
+
+        let startedBots = false;
+
+        window.addEventListener("mousemove", event => {
+            window.clientX = event.clientX;
+            window.clientY = event.clientY;
+        });
+
+        let socket = io.connect(BotServer, {
+            transports: ["websocket", "polling"]
+        });
+
+        document.addEventListener('keydown', function(e) {
+            let key = e.key;
+            switch (key) {
+                case 'x':
+                    socket.emit('split');
+                    break;
+                case 'c':
+                    socket.emit('eject');
+                    break;
+                case '2':
+                    socket.emit('aiMode');
+                    break;
+                case '1':
+                    startedBots = !startedBots;
+                    if(!startedBots) window.stop();
+                    if(startedBots) window.start();
+                    break;
+            }
+        });
+
+        window.start = () => {
+            // Verificar se o servidor foi corretamente capturado
+            console.log('Server IP:', window.botClient.server);
+
+            // Emitir o evento 'start' com as informações necessárias
+            socket.emit('start', {
+                ip: window.botClient.server,
+                protocolVersion: window.botClient.protocolVersion,
+                clientVersion: window.botClient.clientVersion
+            });
+        };
+
+        window.stop = () => {
+            socket.emit('stop');
+        };
+
+        setTimeout(() => {
+            let botsContainer = document.createElement("span");
+            botsContainer.id = "bots-container";
+            botsContainer.style.boxShadow = "0px 0px 20px black";
+            botsContainer.style.zIndex = "9999999";
+            botsContainer.style.backgroundColor = "#000000";
+            botsContainer.style.MozOpacity = "0.4";
+            botsContainer.style.KhtmlOpacity = "0.4";
+            botsContainer.style.opacity = "0.7";
+            botsContainer.style.zoom = "1";
+            botsContainer.style.width = "205px";
+            botsContainer.style.top = "300px";
+            botsContainer.style.left = "10px";
+            botsContainer.style.display = "block";
+            botsContainer.style.position = "absolute";
+            botsContainer.style.textAlign = "center";
+            botsContainer.style.fontSize = "15px";
+            botsContainer.style.color = "#ffffff";
+            botsContainer.style.fontFamily = "Ubuntu";
+            botsContainer.style.border = "2px solid #e00f00";
+
+            let titleElement = document.createElement("span");
+            titleElement.style.color = "#ffffff";
+            titleElement.style.display = "inline";
+            titleElement.style.MozOpacity = "1";
+            titleElement.style.KhtmlOpacity = "1";
+            titleElement.style.opacity = "1";
+            titleElement.style.fontSize = "19px";
+            titleElement.style.filter = "alpha(opacity=100)";
+            titleElement.style.padding = "10px";
+            titleElement.innerHTML = "Status: <a id='status'>Offline</a>";
+
+            let minionsElement = document.createElement("div");
+            minionsElement.style.color = "#ffffff";
+            minionsElement.style.display = "inline";
+            minionsElement.style.MozOpacity = "1";
+            minionsElement.style.KhtmlOpacity = "1";
+            minionsElement.style.opacity = "1";
+            minionsElement.style.filter = "alpha(opacity=100)";
+            minionsElement.style.padding = "10px";
+            minionsElement.innerHTML = "<br>Connected: <a id='minionCount'>Offline</a><br>Spawned: <a id='minionSpawned'>Offline</a>";
+
+            let marqueeElement = document.createElement("marquee");
+            marqueeElement.innerHTML = "YT: Melo - Agar";
+
+            botsContainer.appendChild(titleElement);
+            botsContainer.appendChild(minionsElement);
+            botsContainer.appendChild(marqueeElement);
+
+           document.querySelector('.canvas').insertAdjacentElement('afterend', botsContainer);
+            let originalColor = document.getElementById("status").style.color;
+            document.getElementById("status").style.color = "#e00f00";
+            document.getElementById("minionCount").style.color = "#e00f00";
+            document.getElementById("minionSpawned").style.color = "#e00f00";
+
+            let started = false;
+            let stopped = false;
+
+            socket.on('started', () => {
+                started = true;
+                document.getElementById("status").innerHTML = 'Started';
+                document.getElementById("status").style.color = originalColor;
+                botsContainer.style.border = "2px solid #0c31d4";
+            });
+
+            socket.on('stopped', () => {
+                stopped = false;
+                document.getElementById("status").innerHTML = 'Stopped';
+            });
+
+            socket.on('botCount', (connectedBots, spawnedBots) => {
+                document.getElementById("minionCount").innerHTML = connectedBots;
+                document.getElementById("minionSpawned").innerHTML = spawnedBots;
+            });
+
+            setInterval(() => {
+                if(socket.connected) {
+                    socket.emit('move', window.botClient.mousePosition.x, window.botClient.mousePosition.y);
+                    if(started || stopped) return;
+                    document.getElementById("status").style.color = originalColor;
+                    document.getElementById("minionCount").style.color = originalColor;
+                    document.getElementById("minionSpawned").style.color = originalColor;
+                    document.getElementById("status").innerHTML = 'Connected';
+                    document.getElementById("minionCount").innerHTML = 'Online';
+                    document.getElementById("minionSpawned").innerHTML = 'Online'
+                    botsContainer.style.border = "2px solid #0c31d4";
+                } else {
+                    started = false;
+                    document.getElementById("status").style.color = "#e00f00";
+                    document.getElementById("minionCount").style.color = "#e00f00";
+                    document.getElementById("minionSpawned").style.color = "#e00f00";
+                    document.getElementById("minionCount").innerHTML = 'Offline';
+                    document.getElementById("minionSpawned").innerHTML = 'Offline';
+                    document.getElementById("status").innerHTML = 'Offline';
+                    botsContainer.style.border = "2px solid #e00f00";
+                }
+            }, 10);
+        }, 3500);
+    }
+                </script>`);
+                document.close();
+            };
+            reader.readAsText(blob);
+        }
+    });
+}
